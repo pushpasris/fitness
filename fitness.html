@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f7f7;
+            padding-top: 60px; /* to avoid content being hidden under the fixed navbar */
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            color: #ccc;
+        }
+
+        .login-signup {
+            float: right;
+        }
+
+        .login-signup a {
+            margin-right: 10px;
+        }
+
+        .burger {
+            display: none;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+        .login-modal, .signup-modal {
+            display: none; /* hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: #555;
+        }
+
+        .fitness-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .fitness-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .fitness-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .fitness-section {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .fitness-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .fitness-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .fitness-section li {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .fitness-section li i {
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .fitness-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Additional styling for new content */
+        .hero {
+            background: url('https://img.pikbest.com/backgrounds/20200118/technology-background-templates-modern-dark-illusive-effect-decor-v_1639169jpg!sw800') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+        }
+
+        .testimonials {
+            background-color: #eaeaea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .testimonial {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .testimonial i {
+            color: #ffb400;
+            margin-right: 10px;
+        }
+
+        .cta {
+            background-color: #ffb400;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cta button {
+            padding: 10px 20px;
+            background-color: white;
+            color: #ffb400;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .cta button:hover {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Fitness Website</a>
+        <div class="login-signup">
+            <a href="#" class="login-btn" id="login-btn"><i class="fas fa-lock"></i> Login</a>
+            <a href="#" class="signup-btn" id="signup-btn"><i class="fas fa-user-plus"></i> Signup</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#"><i class="fas fa-dumbbell"></i> Services</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <form>
+                <input type="email" placeholder="Email" id="login-email">
+                <input type="password" placeholder="Password" id="login-password">
+                <button id="login-submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="signup-link">Signup</a></p>
+        </div>
+    </div>
+
+    <div class="signup-modal" id="signup-modal">
+        <div class="modal-content">
+            <h2>Signup</h2>
+            <form>
+                <input type="email" placeholder="Email" id="signup-email">
+                <input type="password" placeholder="Password" id="signup-password">
+                <input type="password" placeholder="Confirm Password" id="signup-confirm-password">
+                <button id="signup-submit">Signup</button>
+            </form>
+            <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+        </div>
+    </div>
+
+    <header class="hero">
+        <h1>Get Fit, Stay Healthy</h1>
+    </header>
+
+    <main class="fitness-content">
+        <h1>Welcome to Fitness Website</h1>
+        <p>This is a sample fitness website with a responsive design and login/signup functionality.</p>
+
+        <section class="fitness-section">
+            <h2>Our Services</h2>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStFBfEvXawk8n6hx9ejNUKCpTDP0JRXn2HqCyY6e7Wo6cjBEgyh4fXJb7XcX-SvmgYUBk&usqp=CAU" alt="Fitness Services">
+            <ul>
+                <li><i class="fas fa-running"></i> Personal Training</li>
+                <li><i class="fas fa-users"></i> Group Fitness</li>
+                <li><i class="fas fa-utensils"></i> Nutrition Planning</li>
+            </ul>
+        </section>
+
+        <section class="fitness-section">
+            <h2>Our Trainers</h2>
+            <img src="data:image/jpeg;base64,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" alt="Our Trainers">
+            <ul>
+                <li><i class="fas
